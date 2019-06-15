@@ -1,0 +1,139 @@
+
+.calendar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid black;
+  min-width: 76.8em;
+  width: 100%;
+  position: relative;
+}
+
+.calendar-days {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%
+}
+
+.calendar-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.calendar-events {
+  width: 100%;
+}
+
+.calendar-day__number {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-weight: bold;
+}
+
+.calendar-header {
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  align-content: space-around;
+}
+
+.calendar-header button {
+  font-size: 1.5em;
+  margin: 0 1em;
+  width: 50px;
+  background-color: silver;
+  border: none;
+  font-weight: bold;
+  border: 1px solid #9a9a9a;
+}
+
+.calendar-day {
+  border: 1px solid black;
+  height: 150px;
+  width: 13%;
+  position: relative;
+  padding-top: 15px;
+}
+
+.calendar-day--empty {
+  background: #e0e0e0;
+}
+
+.calendar-week-days {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+  text-align: center;
+  font-weight: 500;
+}
+
+.calendar-week-day {
+  width: 13%;
+  border: 1px solid black;
+  background-color: #2f74b5;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.calendar-day:hover .calendar-day__button {
+  display: block;
+  position: absolute;
+  bottom: 20px;
+  padding: 8px;
+  z-index: 100;
+  cursor: pointer;
+}
+
+.calendar-day__button {
+  display: none;
+}
+
+
+.calendar-modal {
+  z-index: 200;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%) !important;
+  width: 400px;
+  height: 200px;
+  background-color: white;
+  text-align: center;
+  border: 2px solid black;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  text-align: left;
+}
+
+.calendar-modal button {
+  padding: 10px 20px;
+}
+
+.calendar-modal__overlay {
+  width: 100vw;
+  height: 100vh;
+  content: ' ';
+  background: black;
+  position: absolute;
+  opacity: 0.3; 
+}
+
+button {
+  background: white;
+  border: 1px solid black;
+  box-shadow: none;
+}
+
+button:hover {
+  cursor: pointer;
+}
