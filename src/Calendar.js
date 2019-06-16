@@ -6,46 +6,37 @@ import CalendarModal from './CalendarModal';
 import uuid from 'uuid/v4';
 
 class Calendar extends Component {
-  constructor(props) {
-    super(props);
-    this.previousMonth = this.previousMonth.bind(this);
-    this.nextMonth = this.nextMonth.bind(this);
-    this.openModal = this.openModal.bind(this);
-    this.addEvent = this.addEvent.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-    this.onInputChange = this.onInputChange.bind(this);
-    this.editEvent = this.editEvent.bind(this);
-    this.removeEvent = this.removeEvent.bind(this);
-    this.state = {
-      edit: false,
-      calendar: calendarService.getCalendarMonthData(),
-      isModalOpened: false,
-      currentDay: {
-        idx: 0,
-        time: '',
-        title: '',
-        color: '#ffffff',
-        date: ''
-      }
+
+  state = {
+    edit: false,
+    calendar: calendarService.getCalendarMonthData(),
+    isModalOpened: false,
+    currentDay: {
+      idx: 0,
+      time: '',
+      title: '',
+      color: '#ffffff',
+      date: ''
     }
   }
+  
   //calendar will receive calendar data to render calendar the appropiate way
 
-  previousMonth() {
+  previousMonth = () => {
     const calendar = calendarService.setPrevMonth().getCalendarMonthData();
     this.setState({
       calendar
     })
   }
 
-  nextMonth() {
+  nextMonth = () => {
     const calendar = calendarService.setNextMonth().getCalendarMonthData();
     this.setState({
       calendar
     })
   }
 
-  openModal(e, idx, date, currentDay = this.state.currentDay, edit = false) {
+  openModal = (e, idx, date, currentDay = this.state.currentDay, edit = false) => {
     e.stopPropagation();
     this.setState({
       edit,
@@ -58,14 +49,14 @@ class Calendar extends Component {
     });
   }
 
-  closeModal() {
+  closeModal = () => {
     this.setState({
       isModalOpened: false,
       currentDay: calendarService.currentDayReset()         
     });
   }
 
-  addEvent(eventData) {    
+  addEvent = (eventData) => { 
     this.setState({
       currentDay: calendarService.currentDayReset(),
       isModalOpened: false,
@@ -73,7 +64,7 @@ class Calendar extends Component {
     })
   }
 
-  removeEvent(eventData) {
+  removeEvent = (eventData) => {
     this.setState({
       currentDay: calendarService.currentDayReset(),
       isModalOpened: false,
@@ -81,7 +72,7 @@ class Calendar extends Component {
     })
   }
 
-  editEvent(eventData) {
+  editEvent = (eventData) => {
     this.setState({
       currentDay: calendarService.currentDayReset(),
       isModalOpened: false,
@@ -89,7 +80,7 @@ class Calendar extends Component {
     })
   }  
 
-  onInputChange(value, type) {
+  onInputChange = (value, type) => {
     this.setState({
       currentDay: {
         ...this.state.currentDay,
@@ -100,15 +91,15 @@ class Calendar extends Component {
 
   render() {
     return(
-      <div className="calendar">     
-        <CalendarHeader 
-          month={this.state.calendar.monthName}
-          prevMonth={this.previousMonth}
-          nextMonth={this.nextMonth}/>
-        <CalendarWeekDays/>
+      <div className="calendar">
+
+        <CalendarHeader/>
+        
+        <CalendarWeekDays weekdays={calendarService.weekdays()}/>
+        
         <div className="calendar-days">
           {this.state.calendar.days.map((day) => 
-            ((day === null) ? <CalendarDayEmptyShell/> : <CalendarDay key={uuid()} day={day} openModal={this.openModal} />)          
+            ((day === null) ? <CalendarDayEmptyShell key={uuid()}/> : <CalendarDay key={uuid()} day={day} openModal={this.openModal} />)          
           )}
         </div>
 
@@ -126,26 +117,18 @@ class Calendar extends Component {
   }
 }
 
-function CalendarWeekDays() {
-  return(
-    <div className="calendar-week-days">
-      <div className="calendar-week-day">Sunday</div>
-      <div className="calendar-week-day">Monday</div>
-      <div className="calendar-week-day">Tuesday</div>
-      <div className="calendar-week-day">Wednesday</div>
-      <div className="calendar-week-day">Thursday</div>
-      <div className="calendar-week-day">Friday</div>
-      <div className="calendar-week-day">Saturday</div>
-    </div>
-  )
-}
-function CalendarDayEmptyShell() {
-  return(
-    <div className="calendar-day calendar-day--empty">
-      {/* empty for now */}
-    </div>
-  )
-}
+const CalendarWeekDays = (props) => (
+  <div className="calendar-week-days">
+    { props.weekdays.map( day => <div key={uuid()} className="calendar-week-day">{day}</div> ) }
+  </div>
+)
+
+const CalendarDayEmptyShell = () =>  (
+  <div className="calendar-day calendar-day--empty">
+    {/* empty for now */}
+  </div>
+)
+
 
 
 export default Calendar;

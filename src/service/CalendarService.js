@@ -16,6 +16,8 @@ const calendarService = (() => {
     return calendarService; 
   }
 
+  const weekdays = () => moment.weekdays()
+
   const isMonthLimit = () => monthLimit === currentMonth
   
   const getMonthName = () => moment().month(currentMonth).format('MMMM')
@@ -111,14 +113,15 @@ const calendarService = (() => {
 
   return(
     {
-      isMonthLimit: isMonthLimit,
-      getCalendarMonthData: getCalendarMonthData,
-      addEvent: addEvent,
-      editEvent: editEvent,
-      removeEvent: removeEvent,
-      setNextMonth: setNextMonth,
-      setPrevMonth: setPrevMonth,
-      currentDayReset: currentDayReset
+      isMonthLimit,
+      getCalendarMonthData,
+      addEvent,
+      editEvent,
+      removeEvent,
+      setNextMonth,
+      setPrevMonth,
+      currentDayReset,
+      weekdays
     }
   )
 })();
