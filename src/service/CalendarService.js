@@ -48,7 +48,7 @@ const calendarService = (() => {
 
   const getDayFromMonth = (m, d, y) =>  moment(`${m}/${d}/${y}`, 'MM/D/YYYY').format('DD');
 
-  const addEvent = ([idx, time, title, color, date, city, weather, icon, uuid]) => {
+  const addEvent = ({idx, time, title, color, date, city, weather, icon, uuid}) => {
     const [ hour, minutes ] = time.split(':');
     const unix = moment(date, 'MM/DD/YYYY').set({ hour, minutes }).unix();
     if(currentMonthData[idx].events[unix]) {
@@ -62,7 +62,7 @@ const calendarService = (() => {
     }
   }
 
-  const editEvent = ([idx, time, title, color, date, city, weather, icon, uuid]) => {
+  const editEvent = ({idx, time, title, color, date, city, weather, icon, uuid}) => {
     const [ hour, minutes ] = time.split(':');
     const unix = moment(date, 'MM/DD/YYYY').set({ hour, minutes }).unix();
     currentMonthData[idx].events[unix] = currentMonthData[idx].events[unix].map((event)=> {
@@ -78,7 +78,7 @@ const calendarService = (() => {
     }    
   }
 
-  const removeEvent = ([idx, time, _title, _color, date, _city, _weather, _icon, uuid]) => {
+  const removeEvent = ({idx, time, date, uuid}) => {
     const [ hour, minutes ] = time.split(':');
     const unix = moment(date, 'MM/DD/YYYY').set({ hour, minutes }).unix();
     currentMonthData[idx].events[unix] = currentMonthData[idx].events[unix].filter((event) => uuid !== event.uuid);

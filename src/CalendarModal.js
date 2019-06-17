@@ -1,12 +1,12 @@
 import React, {Fragment} from 'react';
 import { connect } from 'react-redux';
-import { addEvent, closeModal, onInputChange, editEvent, removeEvent, getWeather, setWeather} from './actions'
-import { throttle } from 'throttle-debounce';
+import { addEvent, closeModal, onInputChange, editEvent, removeEvent, getWeather } from './actions'
 import _uuid from 'uuid/v4';
 
 const CalendarModal = (props) => {
 
-  const { currentDay: { idx, time, title, color, date, uuid, city, weather, icon }, isModalOpened, addEvent, closeModal, onInputChange, edit, editEvent, removeEvent, getWeather} = props;
+  const { currentDay, isModalOpened, addEvent, closeModal, onInputChange, edit, editEvent, removeEvent, getWeather} = props;
+  const { time, title, color, uuid, city, weather, icon } = currentDay;
   const style = (isModalOpened) ? { display: 'flex' } : { display: 'none' };
   
   return(
@@ -40,11 +40,11 @@ const CalendarModal = (props) => {
           edit ?
           (
             <Fragment>
-              <button onClick={() => editEvent([idx, time , title, color, date, city, weather, icon, uuid])}>Edit Event</button>
-              <button onClick={() => removeEvent([idx, time , title, color, date, city, weather, icon, uuid])}>Remove</button>
+              <button onClick={() => editEvent({...currentDay, uuid})}>Edit Event</button>
+              <button onClick={() => removeEvent({...currentDay, uuid})}>Remove</button>
             </Fragment>
           ) : (
-            <button onClick={() => addEvent([idx, time , title, color, date, city, weather, icon, _uuid()])}>Add Event</button>
+            <button onClick={() => addEvent({...currentDay, uuid: _uuid()})}>Add Event</button>
           )
         }
       </div>
