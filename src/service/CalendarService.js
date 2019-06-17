@@ -41,18 +41,20 @@ const calendarService = (() => {
     title: '',
     color: '#ffffff',
     date: '',
-    city: ''
+    city: '',
+    weather: '',
+    icon: ''
   })
 
   const getDayFromMonth = (m, d, y) =>  moment(`${m}/${d}/${y}`, 'MM/D/YYYY').format('DD');
 
-  const addEvent = ([idx, time, title, color, date, city, uuid]) => {
+  const addEvent = ([idx, time, title, color, date, city, weather, icon, uuid]) => {
     const [ hour, minutes ] = time.split(':');
     const unix = moment(date, 'MM/DD/YYYY').set({ hour, minutes }).unix();
     if(currentMonthData[idx].events[unix]) {
-      currentMonthData[idx].events[unix].push({ idx, time, title, color, date, city, uuid })
+      currentMonthData[idx].events[unix].push({ idx, time, title, color, date, city, weather, icon, uuid })
     } else {
-      currentMonthData[idx].events[unix] = [{idx, time, title, color, date, city, uuid}];
+      currentMonthData[idx].events[unix] = [{idx, time, title, color, date, city, weather, icon, uuid}];
     }
     return {      
       days: currentMonthData,
@@ -60,12 +62,12 @@ const calendarService = (() => {
     }
   }
 
-  const editEvent = ([idx, time, title, color, date, city, uuid]) => {
+  const editEvent = ([idx, time, title, color, date, city, weather, icon, uuid]) => {
     const [ hour, minutes ] = time.split(':');
     const unix = moment(date, 'MM/DD/YYYY').set({ hour, minutes }).unix();
     currentMonthData[idx].events[unix] = currentMonthData[idx].events[unix].map((event)=> {
       if(uuid === event.uuid) {
-        event = { idx, time, title, color, date, city, uuid };
+        event = { idx, time, title, color, date, city, weather, icon, uuid };
       }
       return event;
     })
@@ -76,7 +78,7 @@ const calendarService = (() => {
     }    
   }
 
-  const removeEvent = ([idx, time, _title, _color, date, _city, uuid]) => {
+  const removeEvent = ([idx, time, _title, _color, date, _city, _weather, _icon, uuid]) => {
     const [ hour, minutes ] = time.split(':');
     const unix = moment(date, 'MM/DD/YYYY').set({ hour, minutes }).unix();
     currentMonthData[idx].events[unix] = currentMonthData[idx].events[unix].filter((event) => uuid !== event.uuid);

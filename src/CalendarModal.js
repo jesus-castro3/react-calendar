@@ -1,13 +1,14 @@
 import React, {Fragment} from 'react';
 import { connect } from 'react-redux';
-import { addEvent, closeModal, onInputChange, editEvent, removeEvent} from './actions'
+import { addEvent, closeModal, onInputChange, editEvent, removeEvent, getWeather, setWeather} from './actions'
+import { throttle } from 'throttle-debounce';
 import _uuid from 'uuid/v4';
 
 const CalendarModal = (props) => {
 
-  const { currentDay: { idx, time, title, color, date, uuid, city, weather }, isModalOpened, addEvent, closeModal, onInputChange, edit, editEvent, removeEvent} = props;
+  const { currentDay: { idx, time, title, color, date, uuid, city, weather, icon }, isModalOpened, addEvent, closeModal, onInputChange, edit, editEvent, removeEvent, getWeather} = props;
   const style = (isModalOpened) ? { display: 'flex' } : { display: 'none' };
-
+  
   return(
     <Fragment>
       <div className="calendar-modal" style={style}> 
@@ -24,7 +25,12 @@ const CalendarModal = (props) => {
         </div>
         <div className="calendar-modal-group">
           <label htmlFor="calendar-event-city">City: </label>
-          <input name="calendar-event-city" type="text" value={city} onChange={(e) => onInputChange(e.target.value, 'city')}/>
+          <input name="calendar-event-city" type="text" value={city} onChange={(e) =>  onInputChange(e.target.value, 'city')}/>
+          <button onClick={(e) => getWeather(city, 'city')}>search</button>
+          <div className="calendar-modal-weather">          
+            { weather && <div>{weather}</div>}
+            { icon && <img src={`http://openweathermap.org/img/w/${icon}.png`} alt="forecast icon" width="40" height="40"/>}
+          </div>
         </div>          
         <div className="calendar-modal-group">
           <label htmlFor="calendar-event-color">Event Color: </label>
@@ -34,11 +40,11 @@ const CalendarModal = (props) => {
           edit ?
           (
             <Fragment>
-              <button onClick={() => editEvent([idx, time , title, color, date, city, uuid])}>Edit Event</button>
-              <button onClick={() => removeEvent([idx, time , title, color, date, city, uuid])}>Remove</button>
+              <button onClick={() => editEvent([idx, time , title, color, date, city, weather, icon, uuid])}>Edit Event</button>
+              <button onClick={() => removeEvent([idx, time , title, color, date, city, weather, icon, uuid])}>Remove</button>
             </Fragment>
           ) : (
-            <button onClick={() => addEvent([idx, time , title, color, date, city, _uuid()])}>Add Event</button>
+            <button onClick={() => addEvent([idx, time , title, color, date, city, weather, icon, _uuid()])}>Add Event</button>
           )
         }
       </div>
@@ -58,7 +64,8 @@ const mapDispatchToProps = dispatch => ({
   closeModal: () => dispatch(closeModal()),
   onInputChange: (value, type) => dispatch(onInputChange(value, type)),
   editEvent: (eventData) => dispatch(editEvent(eventData)),
-  removeEvent: (eventData) => dispatch(removeEvent(eventData))
+  removeEvent: (eventData) => dispatch(removeEvent(eventData)),
+  getWeather: (value, type) => dispatch(getWeather(value, type))
 })
 
 export default connect(

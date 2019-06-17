@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
 import './App.css';
 import './Calendar.css';
 import Calendar from './Calendar';
 import rootReducer from './reducers';
 
 const store = createStore(
-  rootReducer
+  rootReducer,
+  applyMiddleware(thunk)
 );
 
 class App extends Component {

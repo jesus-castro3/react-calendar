@@ -79,6 +79,18 @@ export const calendar = (state = initialState, action) => {
           [action.data.type]: action.data.value
         }
       }
+    
+    case 'SET_WEATHER':
+      const [weather] = action.data.weather;
+      return {
+        ...state,
+        currentDay: {
+          ...state.currentDay,
+          [action.data.type]: action.data.value,
+          weather: weather.description,
+          icon: weather.icon
+        }
+      }
 
     default:
       return state;

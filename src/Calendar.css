@@ -115,7 +115,7 @@
 }
 
 .calendar-modal button {
-  padding: 10px 20px;
+  padding: 7px 20px;
 }
 
 .calendar-modal__overlay {
@@ -142,10 +142,14 @@ button:hover {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
 }
-.calendar-modal-group label {
 
-}
-.calendar-modal-group input {
-  /* display: block; */
+.calendar-modal-weather {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
