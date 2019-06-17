@@ -12,9 +12,8 @@ const CalendarHeader = (props) => (
 );
 
 const mapStateToProps = state => {
-  debugger;
   return {
-    month: state.calendar.monthName
+    month: state.calendar.calendar.monthName
   }
 };
 

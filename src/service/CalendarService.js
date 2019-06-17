@@ -40,18 +40,19 @@ const calendarService = (() => {
     time: '',
     title: '',
     color: '#ffffff',
-    date: ''
+    date: '',
+    city: ''
   })
 
   const getDayFromMonth = (m, d, y) =>  moment(`${m}/${d}/${y}`, 'MM/D/YYYY').format('DD');
 
-  const addEvent = ([idx, time, title, color, date, uuid]) => {
+  const addEvent = ([idx, time, title, color, date, city, uuid]) => {
     const [ hour, minutes ] = time.split(':');
     const unix = moment(date, 'MM/DD/YYYY').set({ hour, minutes }).unix();
     if(currentMonthData[idx].events[unix]) {
-      currentMonthData[idx].events[unix].push({ idx, time, title, color, date, uuid })
+      currentMonthData[idx].events[unix].push({ idx, time, title, color, date, city, uuid })
     } else {
-      currentMonthData[idx].events[unix] = [{idx, time, title, color, date, uuid}];
+      currentMonthData[idx].events[unix] = [{idx, time, title, color, date, city, uuid}];
     }
     return {      
       days: currentMonthData,
@@ -59,12 +60,12 @@ const calendarService = (() => {
     }
   }
 
-  const editEvent = ([idx, time, title, color, date, uuid]) => {
+  const editEvent = ([idx, time, title, color, date, city, uuid]) => {
     const [ hour, minutes ] = time.split(':');
     const unix = moment(date, 'MM/DD/YYYY').set({ hour, minutes }).unix();
     currentMonthData[idx].events[unix] = currentMonthData[idx].events[unix].map((event)=> {
       if(uuid === event.uuid) {
-        event = { idx, time, title, color, date, uuid };
+        event = { idx, time, title, color, date, city, uuid };
       }
       return event;
     })
@@ -75,7 +76,7 @@ const calendarService = (() => {
     }    
   }
 
-  const removeEvent = ([idx, time, _title, _color, date, uuid]) => {
+  const removeEvent = ([idx, time, _title, _color, date, _city, uuid]) => {
     const [ hour, minutes ] = time.split(':');
     const unix = moment(date, 'MM/DD/YYYY').set({ hour, minutes }).unix();
     currentMonthData[idx].events[unix] = currentMonthData[idx].events[unix].filter((event) => uuid !== event.uuid);
