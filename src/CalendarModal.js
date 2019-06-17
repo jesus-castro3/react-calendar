@@ -17,15 +17,15 @@ const CalendarModal = (props) => {
         </div>
         <div className="calendar-modal-group">
           <label htmlFor="calendar-event-title">Event Title: </label>
-          <input name="calendar-event-title" type="text" value={title} onChange={(e) => onInputChange(e.target.value, 'title')}/>             
+          <input name="calendar-event-title" type="text" value={title} onChange={(e) => onInputChange(e.target.value, 'title')} maxLength="30"/>
         </div>
         <div className="calendar-modal-group">
           <label htmlFor="calendar-event-time">Event Time: </label>
-          <input name="calendar-event-time" value={time} type="time" onChange={(e) => onInputChange(e.target.value, 'time')}/>
+          <input name="calendar-event-time" value={time} type="time" onChange={(e) => onInputChange(e.target.value, 'time')} maxLength="30"/>
         </div>
         <div className="calendar-modal-group">
           <label htmlFor="calendar-event-city">City: </label>
-          <input name="calendar-event-city" type="text" value={city} onChange={(e) =>  onInputChange(e.target.value, 'city')}/>
+          <input name="calendar-event-city" type="text" value={city} onChange={(e) =>  onInputChange(e.target.value, 'city')} maxLength="30"/>
           <button onClick={(e) => getWeather(city, 'city')}>search</button>
           <div className="calendar-modal-weather">          
             { weather && <div>{weather}</div>}
@@ -34,7 +34,7 @@ const CalendarModal = (props) => {
         </div>          
         <div className="calendar-modal-group">
           <label htmlFor="calendar-event-color">Event Color: </label>
-          <input name="calendar-event-color" value={color} type="color" onChange={(e) => onInputChange(e.target.value, 'color')}/>
+          <input name="calendar-event-color" value={color} type="color" onChange={(e) => onInputChange(e.target.value, 'color')} maxLength="30"/>
         </div>
         {
           edit ?
